@@ -14,7 +14,7 @@ export class EventDetailsComponent implements OnInit {
   event:IEvent
   addMode: boolean
 
-  constructor(private route: ActivatedRoute, private eventService: EventService) {
+  constructor(private eventService: EventService, private route: ActivatedRoute) {
 
   }
 
@@ -35,6 +35,6 @@ export class EventDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.event = this.route.snapshot.data['event']
+    this.event = this.eventService.getEvent(+this.route.snapshot.params['id'])
   }
 }

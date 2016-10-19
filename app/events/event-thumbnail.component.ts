@@ -31,11 +31,6 @@ import { IEvent } from './shared/index'
 })
 export class EventThumbnailComponent {
   @Input() event:IEvent
-  @Output() eventClick = new EventEmitter
-
-  handleClickMe() {
-    this.eventClick.emit(this.event.name)
-  }
 
   getStartTimeStyle():any {
     if (this.event && this.event.time === '8:00 am')
