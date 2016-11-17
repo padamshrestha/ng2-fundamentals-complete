@@ -1,17 +1,17 @@
-import { Component, Input, ElementRef, Inject, OnInit } from '@angular/core'
+import { Component, Input, ViewChild, ElementRef, Inject } from '@angular/core'
 import { JQ_TOKEN } from './jQuery.service'
 
 @Component({
   selector: 'simple-modal',
   template: `
-  <div id="{{elementId}}" class="modal fade" tabindex="-1">
+  <div id="{{elementId}}" #modalcontainer class="modal fade" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
           <h4 class="modal-title">{{title}}</h4>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" (click)="closeModal()">
           <ng-content></ng-content>
         </div>
       </div>
@@ -22,19 +22,17 @@ import { JQ_TOKEN } from './jQuery.service'
     .modal-body { height: 250px; overflow-y: scroll; }
   `]
 })
-export class SimpleModalComponent implements OnInit {
+export class SimpleModalComponent {
   @Input() title: string;
   @Input() elementId: string;
-  private el: HTMLElement;
+  @Input() closeOnBodyClick: string;
+  @ViewChild('modalcontainer') containerEl: ElementRef;
 
-  constructor(ref: ElementRef, @Inject(JQ_TOKEN) private $: any) {
-    this.el = ref.nativeElement;
-  }
+  constructor(@Inject(JQ_TOKEN) private $: any) {}
 
-  ngOnInit() {
-    this.el.getElementsByClassName('modal-body')[0].addEventListener('click', () => {
-      this.$(`#${this.elementId}`).modal('hide');
-    })
+  closeModal() {
+    if(this.closeOnBodyClick.toLocaleLowerCase() === "true") {
+      this.$(this.containerEl.nativeElement).modal('hide');
+    }
   }
-  
 }
