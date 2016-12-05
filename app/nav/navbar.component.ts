@@ -5,7 +5,8 @@ import { EventService } from '../events/index'
 
 @Component({
   selector: 'nav-bar',
-  templateUrl: 'app/nav/navbar.component.html',
+  moduleId: module.id,
+  templateUrl: 'navbar.component.html',
   styles: [`
     .nav.navbar-nav {font-size:15px} 
     #searchForm {margin-right:100px; } 
@@ -18,7 +19,7 @@ export class NavBarComponent {
   searchTerm: string = "";
   foundSessions: ISession[];
 
-  constructor(private auth: AuthService, private eventService: EventService) {
+  constructor(public auth: AuthService, private eventService: EventService) {
   }
 
   searchSessions(searchTerm) {

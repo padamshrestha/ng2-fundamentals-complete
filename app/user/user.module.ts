@@ -19,6 +19,10 @@ import { AuthService } from './auth.service'
   ],
   providers: [
     
+  ],
+  exports: [
+    ProfileComponent,
+    LoginComponent
   ]
 })
 export class UserModule { }

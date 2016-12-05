@@ -1,3 +1,4 @@
+import './rxjs-extensions';
 import { NgModule }      from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule } from '@angular/router'
@@ -29,8 +30,13 @@ import { Error404Component } from './errors/404.component'
 import { appRoutes } from './routes'
 import { AuthService } from './user/auth.service'
 
-declare let toastr : Toastr;
-declare let jQuery : Object;
+import { MY_TOKEN } from './myservice'
+import { UserModule } from './user/user.module'
+
+let toastr : Toastr = window['toastr'];
+let jQuery : Object = window['$'];
+
+let mine : Object = window['myGlobal'];
 
 @NgModule({
   imports: [
@@ -38,6 +44,7 @@ declare let jQuery : Object;
       FormsModule,
       HttpModule,
       ReactiveFormsModule,
+      UserModule,
       RouterModule.forRoot(appRoutes) ],
   declarations: [ 
     EventsAppComponent, 
@@ -59,6 +66,8 @@ declare let jQuery : Object;
     EventService, 
     { provide: TOASTR_TOKEN, useValue: toastr },
     { provide: JQ_TOKEN, useValue: jQuery },
+    { provide: MY_TOKEN, useValue: mine },
+
     EventResolver,
     EventListResolver,
     VoterService,
@@ -71,7 +80,7 @@ declare let jQuery : Object;
 })
 export class AppModule { }
 
-function checkDirtyState(component:CreateEventComponent) {
+export function checkDirtyState(component:CreateEventComponent) {
   if (component.isDirty)
     return window.confirm('You have not saved this event, Do you really want to cancel?') 
 

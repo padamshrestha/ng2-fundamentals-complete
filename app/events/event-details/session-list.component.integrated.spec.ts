@@ -58,7 +58,7 @@ describe('SessionListComponent', () => {
       component.sortBy = 'name';
       component.eventId = 4;
 
-      component.ngOnChanges();
+      component.ngOnChanges({});
       fixture.detectChanges();
 
       //expect(element.querySelector('[well-title]').textContent).toContain('Session 1');

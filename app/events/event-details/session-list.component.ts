@@ -1,11 +1,12 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ISession } from '../shared/index';
 import { AuthService } from '../../user/auth.service'
 import { VoterService } from './voter.service'
 
 @Component({
   selector: 'session-list',
-  templateUrl: '/app/events/event-details/session-list.component.html',
+  moduleId: module.id,
+  templateUrl: 'session-list.component.html',
   styles: ['collapsible-well h6 {margin-top:-5px; margin-bottom:10px }'],
 })
 export class SessionListComponent implements OnChanges {
@@ -17,7 +18,7 @@ export class SessionListComponent implements OnChanges {
 
   constructor(private auth: AuthService, private voterService: VoterService) {}
 
-  ngOnChanges() {
+  ngOnChanges(changes: SimpleChanges) {
     if(this.sessions) {
       this.filterSessions(this.filterBy);
       this.sortBy === 'name' ? this.visibleSessions.sort(sortByNameAsc) : this.visibleSessions.sort(sortByVotesDesc);
